@@ -2,6 +2,7 @@
 ARCHIVE
 www/
 SOW/
+.metabunch.py
 .board_note_history.db
 example1.py
 example2.py
