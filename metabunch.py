@@ -8,17 +8,22 @@ class BunchMeta(type):
     def __new__(mcls, clsname, bases, clsdict):
         defaults = {}
         slots = []
-        d = dict(clsdict)
-        slots = ["x", "y", "color", "__init__", "__repr__"]
+        # d = dict(clsdict)
+        # slots = ["x", "y", "color"]
         for key, val in clsdict.items():
-            pass
+            if not (key.startswith("__") and key.endswith("__")):
+                defaults[key] = val
+        slots = defaults
+        # if clsname == "Point":
+        #     print(f"{defaults = }")
 
         def init(cls, **kwds):
-            for k, v in defaults:
+            for k, v in kwds.items():
                 setattr(cls, k, v)
 
         def repr(cls):
-            print(defaults)
+            # print(defaults)
+            return ", ".join(f"{k}={v!r}" for k, v in defaults.items())
 
         d = dict(__slots__=slots, __init__=init, __repr__=repr)
         return super().__new__(mcls, clsname, bases, d)
@@ -36,4 +41,7 @@ class Point(Bunch):
 
 if __name__ == "__main__":
     p = Point()
-    Point(x=11.2, y=12.3, color="yellow")
+    # print(p.x)
+    p = Point(x=11.2, y=12.3, color="yellow")
+    print(p.x)
+    print(repr(p))
