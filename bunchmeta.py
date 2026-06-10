@@ -15,6 +15,9 @@ class BunchMeta(type):
             for k in defaults:
                 v = kwds.pop(k, defaults[k])
                 setattr(cls, k, v)
+            if kwds:
+                unused = ", ".join(kwds)
+                raise AttributeError(f"No slots left for {unused}")
 
         def repr(cls):
             return ", ".join(
