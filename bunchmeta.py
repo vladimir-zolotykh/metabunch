@@ -20,11 +20,12 @@ class BunchMeta(type):
                 raise AttributeError(f"No slots left for {unused}")
 
         def repr(cls):
-            return ", ".join(
+            s = ", ".join(
                 f"{k}={getattr(cls, k)!r}"
                 for k in defaults
                 if getattr(cls, k) != defaults[k]
             )
+            return f"Point({s})"
 
         d = dict(__slots__=defaults, __init__=init, __repr__=repr)
         return super().__new__(mcls, clsname, bases, d)
