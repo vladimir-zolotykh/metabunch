@@ -25,7 +25,7 @@ class BunchMeta(type):
                 for k in defaults
                 if getattr(cls, k) != defaults[k]
             )
-            return f"Point({s})"
+            return f"{clsname}({s})"
 
         d = dict(__slots__=defaults, __init__=init, __repr__=repr)
         return super().__new__(mcls, clsname, bases, d)
