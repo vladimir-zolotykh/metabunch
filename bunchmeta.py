@@ -31,7 +31,7 @@ class BunchMeta(type):
             return f"{clsname}({s})"
 
         d = dict(__slots__=list(defaults), __init__=init, __repr__=repr)
-        forbidden = [k for k in dunders if k in d]
+        forbidden = d.keys() & dunders.keys()
         if forbidden:
             raise AttributeError(f"{', '.join(forbidden)} must not be overridden")
         d.update(dunders)
