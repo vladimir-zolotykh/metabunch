@@ -9,7 +9,7 @@ class BunchMeta(type):
         defaults = {}
         dunders = {}
         for key, val in clsdict.items():
-            if key.startswith("__") and key.endswith("__"):
+            if key[:2] == "__" and key[-2:] == "__":
                 dunders[key] = val
             else:
                 defaults[key] = val
