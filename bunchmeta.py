@@ -9,10 +9,10 @@ class BunchMeta(type):
         defaults = {}
         dunders = {}
         for key, val in clsdict.items():
-            if not (key.startswith("__") and key.endswith("__")):
-                defaults[key] = val
-            else:
+            if key.startswith("__") and key.endswith("__"):
                 dunders[key] = val
+            else:
+                defaults[key] = val
 
         def init(cls, **kwds):
             for k in defaults:
@@ -31,16 +31,10 @@ class BunchMeta(type):
             return f"{clsname}({s})"
 
         d = dict(__slots__=list(defaults), __init__=init, __repr__=repr)
-        forbidden = []
-        for k in dunders:
-            if k in d:
-                forbidden.append(k)
+        forbidden = [k for k in dunders if k in d]
         if forbidden:
             raise AttributeError(f"{', '.join(forbidden)} must not be overridden")
         d.update(dunders)
-        # for k in dunders:
-        #     if k in d:
-        #         pass
         return super().__new__(mcls, clsname, bases, d)
 
 
