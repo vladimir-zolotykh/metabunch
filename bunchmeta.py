@@ -24,9 +24,7 @@ class BunchMeta(type):
 
         def repr(cls):
             s = ", ".join(
-                f"{k}={getattr(cls, k)!r}"
-                for k in defaults
-                if getattr(cls, k) != defaults[k]
+                f"{k}={v!r}" for k in defaults if (v := getattr(cls, k)) != defaults[k]
             )
             return f"{clsname}({s})"
 
